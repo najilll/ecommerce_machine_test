@@ -1,0 +1,36 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+   
+    order id :<p>{{order.id}}</p>
+    Total payment:<p>{{order.payable}}</p>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Num</th>
+                <th>Item</th>
+                <th>Image</th>
+                <th>Price</th>
+                <th>qty</th>
+                <th>AMOUNT</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+                {% for item in order.get_items %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{ item.product.name }}</td>
+                    <td><img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-thumbnail" width="50" height="50"></td>
+                    <td>{{ item.product.sale_price }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{item.get_total}}</td>
+                </tr>
+                {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+

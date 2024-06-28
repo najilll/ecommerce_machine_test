@@ -1,0 +1,71 @@
+{% extends 'dashboard/base.html' %}
+{% load static i18n crispy_forms_tags %}
+{% block content %}
+
+<div class="page-header">
+    <h3 class="page-title">
+       <a href="{% url 'web:index' %}">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-home"></i>
+            </span> 
+        </a> 
+        {{ title }}
+    </h3>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                {% if object_list %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover border" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th> # </th>
+                                <th> User</th>
+                                <th> Full Name </th>
+                                <th> Email </th>
+                                <th> Phone Number </th>
+                                <th> Address </th>
+                                <th> Payment Method </th>
+                                <th> Payment Status </th>
+                                <th> Order Status </th>
+                                <th> Payable </th>
+                                {% if request.user.is_superuser %}<th> Actions </th>{% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in object_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <th>{{ order.user.username}}</th>
+                                <td>{{ order.full_name }}</td>
+                                <td>{{ order.email }}</td>
+                                <td>{{ order.phone_number }}</td>
+                                <td>{{ order.address }}</td>
+                                <td>{{ order.payment_methode }}</td>
+                                <td>{{ order.payment_status }}</td>
+                                <td>{{ order.order_status }}</td>
+                                <td>{{ order.payable }}</td>
+                                {% if request.user.is_superuser %}
+                                <td>
+                                    <a href="{% url 'shop:order_detail' order.pk %}" class="btn btn-sm btn-circle btn-primary"><i class="mdi mdi-book-open-page-variant"></i></a>
+                                    <a href="{% url 'shop:order_update' order.pk %}" class="btn btn-sm btn-circle btn-info"><i class="mdi mdi-pencil"></i></a>
+                                    <a href="{% url 'shop:order_delete' order.pk %}" class="btn btn-sm btn-circle btn-danger"><i class="mdi mdi-delete"></i></a>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p>No orders found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

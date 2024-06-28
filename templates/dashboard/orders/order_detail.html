@@ -1,0 +1,114 @@
+{% extends 'dashboard/base.html' %}
+{% load static i18n crispy_forms_tags %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h3 class="page-title">{{ object.full_name }}</h3>
+</div>
+
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">{{ object.full_name }}</h4>
+          </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover border" style="width:100%;">
+                        <tbody>
+                            <tr>
+                              <th>Full Name</th>
+                              <td>{{ object.full_name }}</td>
+                            </tr>
+                            <tr>
+                              <th>Email</th>
+                              <td>{{ object.email }}</td>
+                            </tr>
+                            <tr>
+                              <th>Phone Number</th>
+                              <td>{{ object.phone_number }}</td>
+                            </tr>
+                            <tr>
+                              <th>Address</th>
+                              <td>{{ object.address }}</td>
+                            </tr>
+                            <tr>
+                              <th>Landmark</th>
+                              <td>{{ object.land_mark }}</td>
+                            </tr>
+                            <tr>
+                              <th>Town/City</th>
+                              <td>{{ object.town_city }}</td>
+                            </tr>
+                            <tr>
+                              <th>State</th>
+                              <td>{{ object.state }}</td>
+                            </tr>
+                            <tr>
+                              <th>Postcode/ZIP</th>
+                              <td>{{ object.postcode_zip }}</td>
+                            </tr>
+                            <tr>
+                              <th>Country</th>
+                              <td>{{ object.country_name }}</td>
+                            </tr>
+                            <tr>
+                              <th>Payable</th>
+                              <td>{{ object.payable }}</td>
+                            </tr>
+                            <tr>
+                              <th>Payment Method</th>
+                              <td>{{ object.payment_methode }}</td>
+                            </tr>
+                            <tr>
+                              <th>Payment Status</th>
+                              <td>{{ object.payment_status }}</td>
+                            </tr>
+                            <tr>
+                              <th>Order Status</th>
+                              <td>{{ object.order_status }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h5>Order Items</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover border" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Image</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in object.get_items %}
+                            <tr>
+                                <td>{{ item.product.name }}</td>
+                                <td><img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-thumbnail" width="50" height="50"></td>
+                                <td>{{ item.price }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.get_total }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+              {% if request.user.is_superuser %}
+              <div class="">
+                <a href="{% url 'shop:order_update' object.pk %}" class="btn btn-sm btn-light btn-outline-info mr-2">{% trans "Edit" %}</a>
+                <a href="{% url 'shop:order_delete' object.pk %}" class="btn btn-sm btn-light btn-outline-danger">{% trans "Delete" %}</a>
+              </div>
+              {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

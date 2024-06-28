@@ -1,0 +1,22 @@
+{% load static %}
+<header>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container">
+          <a class="navbar-brand" href="{% url "web:index" %}">Home</a>
+          <p>Hello {{user.username}}</p>
+          
+          <a href="{% url "web:cart" %}"> <button class="btn btn-outline-success">Cart</button></a>
+          <a href="{% url "web:order_status" %}"> <button class="btn btn-outline-success">Order Status</button></a>
+          {% if request.user.is_authenticated %}
+          <form action="{% url 'auth_logout' %}" method="post">
+            {% csrf_token %}
+            
+            <button class="btn btn-outline-success" type="submit">logout</button>
+          </form>
+            
+            {% else %}
+            <a href="{% url 'auth_login' %}"><button class="btn btn-outline-success" type="submit">log In</button></a>
+            {% endif %}
+        </div>
+      </nav>
+</header>

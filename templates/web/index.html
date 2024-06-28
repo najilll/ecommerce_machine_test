@@ -1,0 +1,28 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block content %}
+<br>
+    <section>
+        <h1>products</h1>
+    <div class="list">
+                {% for product in products %}
+                <div class="product">
+                    <img alt="shoes1" src="{{product.image.url}}" style="
+                    height: 270px;
+                    width: 100%;">
+                    <div><h2>{{product.name}}</h2>
+                <p class="price">{{product.sale_price}}<sup>.00</sup></p>
+                <p class="descr">{{product.description}}</p>
+                    <br>
+                    <a href="#" data-product-id="{{product.id}}" class="cart-add-btn"><p>Add to cart</p></a></div>
+                </div>
+                {% endfor %}
+                
+    </div>
+    </section>
+    
+  {% endblock %}
+
+  {% block js %}
+  <script src="{% static 'web/js/index_cart.js' %}"></script>
+  {% endblock  %}

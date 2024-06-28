@@ -1,0 +1,41 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <h2>My Orders</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                {% comment %} <th>Image</th>
+                <th>Product Name</th> {% endcomment %}
+                {% comment %} <th>Quantity</th> {% endcomment %}
+                <th>Total Payable</th>
+                <th>Payment Status</th>
+                <th>Order Status</th>
+                <th>View Order</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+                {% for item in orders %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    {% comment %} <td><img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-thumbnail" width="50" height="50"></td> {% endcomment %}
+                    {% comment %} <td>{{ item.order.name }}</td> {% endcomment %}
+                    {% comment %} <td>{{ item.quantity }}</td> {% endcomment %}
+                    <td>${{ item.payable }}</td>
+                    <td>{{ item.payment_status }}</td>
+                    <td>{{ item.order_status }}</td>
+                    <td>
+                        <a href="{% url 'web:order_product' item.id %}">
+                            <button type="submit" class="btn btn-primary mt-2">view product</button>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+{% endblock %}
